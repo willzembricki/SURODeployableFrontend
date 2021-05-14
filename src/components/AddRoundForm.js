@@ -1,10 +1,11 @@
 import Select from "react-select";
 import { useState } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const StyledInput = styled.input`
   margin: 4px;
-  border-radius: 2px;`
+  border-radius: 2px;
+`;
 
 const StyledSubmitInput = styled.input`
   margin: auto;
@@ -17,13 +18,15 @@ const StyledSubmitInput = styled.input`
   color: ${({ theme }) => theme.toggleBorder};
   background-color: ${({ theme }) => theme.background};
   border-radius: 2px;
-  cursor: pointer;`
+  cursor: pointer;
+`;
 
 const selectStyles = {
   option: (provided) => ({
     ...provided,
-    color: 'gray',
-  })}
+    color: "gray",
+  }),
+};
 
 function AddRoundForm({ people, onForceReload, person }) {
   const [roundPrice, setRoundPrice] = useState("");
@@ -38,7 +41,7 @@ function AddRoundForm({ people, onForceReload, person }) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:9393/rounds", {
+    fetch("https://radiant-cliffs-08519.herokuapp.com/rounds", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
@@ -46,28 +49,35 @@ function AddRoundForm({ people, onForceReload, person }) {
         person_id: person.id,
         people_drinking: peopleDrinking,
       }),
-    }).then((res) => res.json())
-    .then(data => {
-        onForceReload(data)}
-        );
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        onForceReload(data);
+      });
     setRoundPrice("");
     setPeopleDrinking([]);
   }
-  return ( <>
-    <h2>Add A Round Of Drinks</h2>
-    <br/>
-    <form onSubmit={handleSubmit}>
-      <StyledInput
-        type="number"
-        placeholder="Price for Round"
-        value={roundPrice}
-        step=".01"
-        onChange={(e) => setRoundPrice(e.target.value)}
-        required
-      />
-      <Select styles={selectStyles} isMulti options={selectPeople} onChange={handleSelections} />
-      <StyledSubmitInput type="submit" value="Buy The Round" />
-    </form>
+  return (
+    <>
+      <h2>Add A Round Of Drinks</h2>
+      <br />
+      <form onSubmit={handleSubmit}>
+        <StyledInput
+          type="number"
+          placeholder="Price for Round"
+          value={roundPrice}
+          step=".01"
+          onChange={(e) => setRoundPrice(e.target.value)}
+          required
+        />
+        <Select
+          styles={selectStyles}
+          isMulti
+          options={selectPeople}
+          onChange={handleSelections}
+        />
+        <StyledSubmitInput type="submit" value="Buy The Round" />
+      </form>
     </>
   );
 }

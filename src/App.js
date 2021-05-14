@@ -12,8 +12,8 @@ import { useState, useEffect } from "react";
 import Toggle from "./components/ToggleDarkMode";
 
 const StyledDiv = styled.div`
-  text-align: center;`
-
+  text-align: center;
+`;
 
 function App() {
   const [peopleArr, setPeopleArr] = useState([]);
@@ -25,13 +25,13 @@ function App() {
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   useEffect(() => {
-    fetch("http://localhost:9393/people")
+    fetch("https://radiant-cliffs-08519.herokuapp.com/people")
       .then((res) => res.json())
       .then((people) => setPeopleArr(people));
-    fetch("http://localhost:9393/rounds")
+    fetch("https://radiant-cliffs-08519.herokuapp.com/rounds")
       .then((res) => res.json())
       .then((rounds) => setRoundsArr(rounds));
-    fetch("http://localhost:9393/person_rounds")
+    fetch("https://radiant-cliffs-08519.herokuapp.com/person_rounds")
       .then((res) => res.json())
       .then((personRounds) => setPersonRoundsArr(personRounds));
   }, []);
@@ -44,21 +44,27 @@ function App() {
   }
 
   function handleCurrentP(id) {
-    console.log(peopleArr)
+    console.log(peopleArr);
     const thisP = peopleArr.find((person) => person.id === parseInt(id));
     setCurrentP(thisP);
   }
 
   function handleDeleteRound(e) {
-    fetch(`http://localhost:9393/rounds/${e.target.value}`, {
-      method: "DELETE",
-    }).then(res => res.json())
-     .then(roundAndPRArr => {
-      setRoundsArr(roundAndPRArr[0]);
-      setPersonRoundsArr(roundAndPRArr[1]);
-      setPeopleArr(roundAndPRArr[2]);
-      setCurrentP(roundAndPRArr[2].find((person) => person.id === currentP.id));
-    });
+    fetch(
+      `https://radiant-cliffs-08519.herokuapp.com/rounds/${e.target.value}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((res) => res.json())
+      .then((roundAndPRArr) => {
+        setRoundsArr(roundAndPRArr[0]);
+        setPersonRoundsArr(roundAndPRArr[1]);
+        setPeopleArr(roundAndPRArr[2]);
+        setCurrentP(
+          roundAndPRArr[2].find((person) => person.id === currentP.id)
+        );
+      });
   }
 
   function handleAddPerson(data) {
@@ -72,8 +78,8 @@ function App() {
         <GlobalStyles />
         <div className="App">
           <StyledDiv>
-          <NavBar />
-          <Toggle theme={theme} toggleTheme={themeToggler} />
+            <NavBar />
+            <Toggle theme={theme} toggleTheme={themeToggler} />
           </StyledDiv>
           <div>
             <PersonList onCurrentP={handleCurrentP} people={peopleArr} />

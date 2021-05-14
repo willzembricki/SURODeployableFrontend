@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const StyledInput = styled.input`
   margin: auto;
@@ -9,7 +9,7 @@ const StyledInput = styled.input`
   text-align: center;
   padding: 0px;
   align-items: center;
-  `
+`;
 
 const StyledSubmitInput = styled.input`
   margin: auto;
@@ -22,13 +22,15 @@ const StyledSubmitInput = styled.input`
   color: ${({ theme }) => theme.toggleBorder};
   background-color: ${({ theme }) => theme.background};
   border-radius: 2px;
-  cursor: pointer;`
+  cursor: pointer;
+`;
 
 const StyledForm = styled.form`
   position: absolute;
   bottom: 25px;
   right: 0;
-  margin-right: 3px;`
+  margin-right: 3px;
+`;
 
 function RoundEditForm({ id, onRoundEdit }) {
   const [newPrice, setNewPrice] = useState(0);
@@ -38,7 +40,7 @@ function RoundEditForm({ id, onRoundEdit }) {
   function onUpdateRound(e) {
     e.preventDefault();
 
-    fetch(`http://localhost:9393/rounds/${id}`, {
+    fetch(`https://radiant-cliffs-08519.herokuapp.com/rounds/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: newPrice }),
@@ -48,8 +50,8 @@ function RoundEditForm({ id, onRoundEdit }) {
   }
 
   return (
-    <StyledForm  onSubmit={onUpdateRound}>
-      <StyledInput 
+    <StyledForm onSubmit={onUpdateRound}>
+      <StyledInput
         step=".01"
         type="number"
         value={newPrice}
