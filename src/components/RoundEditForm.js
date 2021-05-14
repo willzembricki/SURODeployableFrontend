@@ -34,7 +34,7 @@ const StyledForm = styled.form`
 
 function RoundEditForm({ id, onRoundEdit }) {
   const [newPrice, setNewPrice] = useState(0);
-  console.log(id);
+
   // const newId = parseInt(id, 10);
   // let newPrice = 0;
   function onUpdateRound(e) {
