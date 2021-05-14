@@ -44,7 +44,6 @@ function App() {
   }
 
   function handleCurrentP(id) {
-    console.log(peopleArr);
     const thisP = peopleArr.find((person) => person.id === parseInt(id));
     setCurrentP(thisP);
   }
